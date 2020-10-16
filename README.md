@@ -51,13 +51,13 @@ jobs:
 
 ### outputs:
 
-- `name` {string} - The name of the test suite.
-- `hash` {string} -	The unique hash for the test execution, the same one that it returned by the Endtest API call for running a test.	
-- `configuration` {string} - The configuration of the machine or mobile device on which the test was executed.
-- `passed` {int32} - The number of assertions that have passed.
-- `failed` {int32} -	The number of assertions that have failed.
-- `errors` {int32} -	The number of errors that have been encountered.
-- `logs` {string} -	The detailed logs for the test execution.
-- `video_url` {string}	- The URL for the video recording of the test execution.
-- `variables`	{string} - All of the variables from the test execution, both system variables and the variables defined by the user.
-- `source`	{string} - It will always have the value 'endtest'. You can use it in your script to identify the requests coming from our platform.
+* test_suite_name {string} - The name of the test suite.
+* configuration {string} - The configuration of the machine or mobile device on which the test was executed.
+* test_cases {int32} - The number of test cases.
+* passed {int32} - The number of assertions that have passed.
+* failed {int32} - The number of assertions that have failed.
+* errors {int32} - The number of errors that have been encountered.
+* start_time {timestamp} - The timestamp for the start of the test execution.
+* end_time {timestamp} - The timestamp for the end of the test execution.
+* detailed_logs {string} - The detailed logs for the test execution.
+* screenshots_and_video {string} - The URL for the screenshots and the video recording of the test execution.
