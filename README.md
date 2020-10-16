@@ -1,4 +1,4 @@
-![endtest logo](https://endtest.io/images/endtest_logo_1_small.png)
+![endtest logo](https://endtest.io/images/endtest_logo_small.svg)
 
 # Endtest GitHub Run Tests Deployment Action
 
