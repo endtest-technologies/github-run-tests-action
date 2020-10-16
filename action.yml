@@ -1,0 +1,40 @@
+name: "Run Endtest functional tests"
+description: "Register a deployment event with Endtest and run the functional tests"
+branding:
+  icon: play-circle
+  color: white
+inputs:
+  app-id:
+    description: ^
+      'the Endtest App ID for your account. You can get it from the https://endtest.io/settings page.'
+    required: true
+  app-code:
+    description: ^
+      'the Endtest App Code for your account. You can get it from the https://endtest.io/settings page.'
+    required: true
+
+outputs:
+  name: 
+    description: "The name of the test suite"
+  hash: 
+    description: "The unique hash for the test execution, the same one that it returned by the Endtest API call for running a test"
+  configuration:
+    description: "The configuration of the machine or mobile device on which the test was executed"
+  passed: 
+    description: "The number of assertions that have passed"
+  failed:
+    description: "The number of assertions that have failed"
+  errors:
+    description: "The number of errors that have been encountered"
+  logs:
+    description: "The detailed logs for the test execution"
+  video_url: 
+    description: "The URL for the video recording of the test execution"
+  variables:
+    description: "All of the variables from the test execution, both system variables and the variables defined by the user"
+  source:
+    description: "It will always have the value 'endtest'. You can use it in your script to identify the requests coming from our platform."
+
+runs:
+  using: "node12"
+  main: "lib/index.js"
