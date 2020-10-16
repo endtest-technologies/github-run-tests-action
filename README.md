@@ -27,8 +27,7 @@ jobs:
           ENDTEST_APP_CODE: ${{ secrets.ENDTEST_APP_CODE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          application-id: <your-application-id-a>
-          environment-id: <your-environment-id-e>
+          api-request: <your-endtest-api-request-for-starting-a-test-execution>
 ```
 
 ### Environment variables
