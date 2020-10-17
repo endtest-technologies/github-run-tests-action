@@ -5,35 +5,39 @@ branding:
   color: white
 inputs:
   app-id:
-    description: ^
-      'the Endtest App ID for your account. You can get it from the https://endtest.io/settings page.'
+    description: 'The Endtest App ID for your account. You can get it from the https://endtest.io/settings page.'
     required: true
   app-code:
-    description: ^
-      'the Endtest App Code for your account. You can get it from the https://endtest.io/settings page.'
+    description: 'The Endtest App Code for your account. You can get it from the https://endtest.io/settings page.'
+    required: true
+  api-request:
+    description: 'The Endtest API request for starting the test execution.'
+    required: true
+  number-of-loops:
+    description: 'The number of times the API request for fetching the results will be sent once every 30 seconds.'
     required: true
 
 outputs:
-  name: 
+  test-suite-name:
     description: "The name of the test suite"
-  hash: 
-    description: "The unique hash for the test execution, the same one that it returned by the Endtest API call for running a test"
   configuration:
     description: "The configuration of the machine or mobile device on which the test was executed"
-  passed: 
+  test-cases:
+    descriptiion: "The number of test cases"
+  passed:
     description: "The number of assertions that have passed"
   failed:
     description: "The number of assertions that have failed"
   errors:
     description: "The number of errors that have been encountered"
-  logs:
+  start_time:
+    description: "The timestamp for the start of the test execution."
+  end_time:
+    description: "The timestamp for the end of the test execution."
+  detailed_logs:
     description: "The detailed logs for the test execution"
-  video_url: 
-    description: "The URL for the video recording of the test execution"
-  variables:
-    description: "All of the variables from the test execution, both system variables and the variables defined by the user"
-  source:
-    description: "It will always have the value 'endtest'. You can use it in your script to identify the requests coming from our platform."
+  screenshots_and_video:
+    description: "The URLs for the screenshts and video recordings of the test execution"
 
 runs:
   using: "node12"
