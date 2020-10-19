@@ -23,21 +23,16 @@ jobs:
         id: endtest-test-deployment
         uses: endtest-technologies/github-run-tests-action@v1.0
         env:
-          ENDTEST_APP_ID: ${{ secrets.ENDTEST_APP_ID }}
-          ENDTEST_APP_CODE: ${{ secrets.ENDTEST_APP_CODE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          app-id: <your-endtest-app-id>
+          app-code: <your-endtest-app-code>
           api-request: <your-endtest-api-request-for-starting-a-test-execution>
+          number-of-loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
 ```
 
 ### Environment variables
 
-- `ENDTEST_APP_ID` {string} - Your Endtest APP ID
-  [available here](https://endtest.io/settings) This should
-  be installed as a secret in your github repository.
-- `ENDTEST_APP_CODE` {string} - Your Endtest APP Code
-  [available here](https://endtest.io/settings) This should
-  be installed as a secret in your github repository.
 - `GITHUB_TOKEN` {string} (optional) - The Github token for your repository. If
   provided, the Endtest action will associate a pull request with the deployment if
   the commit being built is associated with any pull requests. This token is
@@ -46,10 +41,13 @@ jobs:
 
 ### Inputs
 
+- `app-id` {string} (optional) - The APP ID for your Endtest account [available here](https://endtest.io/settings).
+- `app-code` {string} (optional) - The App Code for your Endtest account [available here](https://endtest.io/settings).
 - `api-request` {string} (optional) - The Endtest API request.
+- `number-of-loops` {int32} (optional) - The number of times the API request for fetching the results will be sent once every 30 seconds.
 
 
-### outputs:
+### Outputs:
 
 * test_suite_name {string} - The name of the test suite.
 * configuration {string} - The configuration of the machine or mobile device on which the test was executed.
