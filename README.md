@@ -41,10 +41,10 @@ jobs:
 
 ### Inputs
 
-- `app-id` {string} (optional) - The App ID for your Endtest account ([available here](https://endtest.io/settings)).
-- `app-code` {string} (optional) - The App Code for your Endtest account ([available here](https://endtest.io/settings)).
-- `api-request` {string} (optional) - The Endtest API request.
-- `number-of-loops` {int32} (optional) - The number of times the API request for fetching the results will be sent once every 30 seconds.
+- `app-id` {string} - The App ID for your Endtest account ([available here](https://endtest.io/settings)).
+- `app-code` {string} - The App Code for your Endtest account ([available here](https://endtest.io/settings)).
+- `api-request` {string} - The Endtest API request.
+- `number-of-loops` {int32} - The number of times the API request for fetching the results will be sent once every 30 seconds.
 
 
 ### Outputs:
