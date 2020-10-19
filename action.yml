@@ -23,7 +23,7 @@ outputs:
   configuration:
     description: "The configuration of the machine or mobile device on which the test was executed"
   test-cases:
-    descriptiion: "The number of test cases"
+    description: "The number of test cases"
   passed:
     description: "The number of assertions that have passed"
   failed:
@@ -43,5 +43,6 @@ runs:
   using: "composite"
   steps:
     - run: sudo apt-get install jq
+      shell: bash 
     - run: ${{ github.action_path }}/test.sh {{ inputs.app-id }} {{ inputs.app-code }} {{ inputs.api-request }} {{ inputs.number-of-loops }}
       shell: bash
