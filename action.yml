@@ -44,5 +44,7 @@ runs:
   steps:
     - run: sudo apt-get install jq
       shell: bash 
+    - run: sudo chmod +x ${{ github.action_path }}/test.sh
+      shell: bash 
     - run: ${{ github.action_path }}/test.sh {{ inputs.app-id }} {{ inputs.app-code }} {{ inputs.api-request }} {{ inputs.number-of-loops }}
       shell: bash
