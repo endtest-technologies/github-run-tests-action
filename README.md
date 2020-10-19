@@ -21,7 +21,7 @@ jobs:
 
       - name: Functional test deployment
         id: endtest-test-deployment
-        uses: endtest-technologies/github-run-tests-action@v1.0
+        uses: endtest-technologies/github-run-tests-action@v1.2.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
