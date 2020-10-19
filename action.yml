@@ -40,5 +40,8 @@ outputs:
     description: "The URLs for the screenshts and video recordings of the test execution"
 
 runs:
-  using: "node12"
-  main: "lib/index.js"
+  using: "composite"
+  steps:
+    - run: sudo apt-get install jq
+    - run: ${{ github.action_path }}/test.sh {{ inputs.app-id }} {{ inputs.app-code }} {{ inputs.api-request }} {{ inputs.number-of-loops }}
+      shell: bash
