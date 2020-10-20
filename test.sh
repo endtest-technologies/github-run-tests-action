@@ -5,25 +5,37 @@ do
   result=$(curl -X GET --header "Accept: */*" "https://endtest.io/api.php?action=getResults&appId=${1}&appCode=${2}&hash=${hash}&format=json")
   if [ "$result" == "Test is still running." ]
   then
-    status = $result
+    status=$result
     # Don't print anything
   elif [ "$result" == "Processing video recording." ]
   then
-    status = $result
+    status=$result
     # Don't print anything
   elif [ "$result" == "Stopping." ]
   then
-    status = $result
+    status=$result
   elif [ "$result" == "Erred." ]
   then
-    status = $result
+    status=$result
     echo $status
   elif [ "$result" == "" ]
   then
-    status = $result
+    status=$result
     # Don't print anything
   else
-     echo "$result" | jq
+     testsuitename=$( echo "$result" | jq '.test_suite_name' )
+     configuration=$( echo "$result" | jq '.configuration' )
+     testcases=$( echo "$result" | jq '.test_cases' )
+     passed=$( echo "$result" | jq '.passed' )
+     failed=$( echo "$result" | jq '.failed' )
+     errors=$( echo "$result" | jq '.errors' )
+     detailedlogs=$( echo "$result" | jq '.detailed_logs' )
+     screenshotsandvideo=$( echo "$result" | jq '.screenshots_and_video' )
+     starttime=$( echo "$result" | jq '.start_time' )
+     endtime=$( echo "$result" | jq '.end_time' )
+
+     echo "::set-output name=test_suite_name::$testsuitename"
+
      exit 0
   fi
 done
