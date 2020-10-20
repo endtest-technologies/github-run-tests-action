@@ -33,8 +33,12 @@ do
      screenshotsandvideo=$( echo "$result" | jq '.screenshots_and_video' )
      starttime=$( echo "$result" | jq '.start_time' )
      endtime=$( echo "$result" | jq '.end_time' )
+     
+     echo $configuration
+     
+     echo "nothing"
 
-     echo ::set-output name=SELECTED_COLOR::green
+     echo "::set-output name=SELECTED_COLOR::green"
      echo '::set-output name=test_suite_name::"$testsuitename"'
 
      exit 0
