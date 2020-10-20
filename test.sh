@@ -39,7 +39,7 @@ do
      echo "nothing"
 
      echo "::set-output name=SELECTED_COLOR::green"
-     echo '::set-output name=test_suite_name::"$testsuitename"'
+     echo ::set-output name=test_suite_name::$testsuitename
 
      exit 0
   fi
