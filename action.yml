@@ -46,7 +46,7 @@ runs:
       shell: bash 
     - run: sudo chmod +x ${{ github.action_path }}/test.sh
       shell: bash 
-    - run: echo {{ inputs.app_id }}
+    - run: echo ${{ inputs.app_id }}
       shell: bash 
     - run: ${{ github.action_path }}/test.sh {{ inputs.app_id }} 79973826 "https://endtest.io/api.php?action=runTestSuite&appId=85205402&appCode=79973826&testSuite=106877&selectedPlatform=windows&selectedOs=a&selectedBrowser=chrome&selectedResolution=d&selectedLocation=sanfrancisco&selectedCases=491130&writtenAdditionalNotes=" 6}
       shell: bash
