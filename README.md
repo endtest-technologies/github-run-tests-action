@@ -21,14 +21,14 @@ jobs:
 
       - name: Functional test deployment
         id: endtest-test-deployment
-        uses: endtest-technologies/github-run-tests-action@v1.2.3
+        uses: endtest-technologies/github-run-tests-action@v1.2.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          app-id: <your-endtest-app-id>
-          app-code: <your-endtest-app-code>
-          api-request: <your-endtest-api-request-for-starting-a-test-execution>
-          number-of-loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
+          app_id: <your-endtest-app-id>
+          app_code: <your-endtest-app-code>
+          api_request: <your-endtest-api-request-for-starting-a-test-execution>
+          number_of_loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
 ```
 
 ### Environment variables
@@ -41,10 +41,10 @@ jobs:
 
 ### Inputs
 
-- `app-id` {string} - The App ID for your Endtest account ([available here](https://endtest.io/settings)).
-- `app-code` {string} - The App Code for your Endtest account ([available here](https://endtest.io/settings)).
-- `api-request` {string} - The Endtest API request.
-- `number-of-loops` {int32} - The number of times the API request for fetching the results will be sent once every 30 seconds.
+- `app_id` {string} - The App ID for your Endtest account ([available here](https://endtest.io/settings)).
+- `app_code` {string} - The App Code for your Endtest account ([available here](https://endtest.io/settings)).
+- `api_request` {string} - The Endtest API request.
+- `number_of_loops` {int32} - The number of times the API request for fetching the results will be sent once every 30 seconds.
 
 
 ### Outputs:
