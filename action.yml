@@ -4,25 +4,25 @@ branding:
   icon: play-circle
   color: white
 inputs:
-  app-id:
+  app_id:
     description: 'The Endtest App ID for your account. You can get it from the https://endtest.io/settings page.'
     required: true
-  app-code:
+  app_code:
     description: 'The Endtest App Code for your account. You can get it from the https://endtest.io/settings page.'
     required: true
-  api-request:
+  api_request:
     description: 'The Endtest API request for starting the test execution.'
     required: true
-  number-of-loops:
+  number_of_loops:
     description: 'The number of times the API request for fetching the results will be sent once every 30 seconds.'
     required: true
 
 outputs:
-  test-suite-name:
+  test_suite_name:
     description: "The name of the test suite"
   configuration:
     description: "The configuration of the machine or mobile device on which the test was executed"
-  test-cases:
+  test_cases:
     description: "The number of test cases"
   passed:
     description: "The number of assertions that have passed"
@@ -46,5 +46,5 @@ runs:
       shell: bash 
     - run: sudo chmod +x ${{ github.action_path }}/test.sh
       shell: bash 
-    - run: ${{ github.action_path }}/test.sh 85205402 79973826 "https://endtest.io/api.php?action=runTestSuite&appId=85205402&appCode=79973826&testSuite=106877&selectedPlatform=windows&selectedOs=a&selectedBrowser=chrome&selectedResolution=d&selectedLocation=sanfrancisco&selectedCases=491130&writtenAdditionalNotes=" 6}
+    - run: ${{ github.action_path }}/test.sh {{ inputs.app_id }} 79973826 "https://endtest.io/api.php?action=runTestSuite&appId=85205402&appCode=79973826&testSuite=106877&selectedPlatform=windows&selectedOs=a&selectedBrowser=chrome&selectedResolution=d&selectedLocation=sanfrancisco&selectedCases=491130&writtenAdditionalNotes=" 6}
       shell: bash
