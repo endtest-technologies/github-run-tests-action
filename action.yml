@@ -46,7 +46,7 @@ runs:
       shell: bash 
     - run: sudo chmod +x ${{ github.action_path }}/test.sh
       shell: bash 
-    - run: echo ${{ inputs.api_request }}
+    - run: echo "${{ inputs.api_request }}"
       shell: bash 
-    - run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} ${{ inputs.api_request }} ${{ inputs.number_of_loops }} 
+    - run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }} 
       shell: bash
