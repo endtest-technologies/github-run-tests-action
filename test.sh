@@ -34,7 +34,8 @@ do
      starttime=$( echo "$result" | jq '.start_time' )
      endtime=$( echo "$result" | jq '.end_time' )
 
-     echo "::set-output name=test_suite_name::$testsuitename"
+     echo '::set-output name=test_suite_name::"$testsuitename"'
+     echo '::set-output name=SELECTED_COLOR::green'
 
      exit 0
   fi
