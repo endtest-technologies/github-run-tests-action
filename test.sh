@@ -25,7 +25,7 @@ do
     status=$result
     # Don't print anything
   else
-     testsuitename=$( echo "$result" | jq '.test_suite_name' )
+     testsuitename=$( echo $result | jq '.test_suite_name' )
      configuration=$( echo "$result" | jq '.configuration' )
      testcases=$( echo "$result" | jq '.test_cases' )
      passed=$( echo "$result" | jq '.passed' )
