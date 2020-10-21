@@ -20,8 +20,8 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Functional test deployment
-        id: endtest-test-deployment
-        uses: endtest-technologies/github-run-tests-action@v1.2.5
+        id: endtest_functional_tests
+        uses: endtest-technologies/github-run-tests-action@v1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -29,6 +29,21 @@ jobs:
           app_code: <your-endtest-app-code>
           api_request: <your-endtest-api-request-for-starting-a-test-execution>
           number_of_loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
+      - name: Use the outputs from test execution in a different step
+        run: |
+          echo ${{ steps.endtest_functional_tests.outputs.test_suite_name }}
+          echo ${{ steps.endtest_functional_tests.outputs.configuration }}
+          echo ${{ steps.endtest_functional_tests.outputs.test_cases }}
+          echo ${{ steps.endtest_functional_tests.outputs.passed }}
+          echo ${{ steps.endtest_functional_tests.outputs.failed }}
+          echo ${{ steps.endtest_functional_tests.outputs.errors }}
+          echo ${{ steps.endtest_functional_tests.outputs.start_time }}
+          echo ${{ steps.endtest_functional_tests.outputs.end_time }}
+          echo ${{ steps.endtest_functional_tests.outputs.detailed_logs }}
+          echo ${{ steps.endtest_functional_tests.outputs.screenshots_and_video }}
+          echo ${{ steps.endtest_functional_tests.outputs.hash }}
+          echo ${{ steps.endtest_functional_tests.outputs.results }}
+     
 ```
 
 ### Environment variables
@@ -58,4 +73,6 @@ jobs:
 * start_time {timestamp} - The timestamp for the start of the test execution.
 * end_time {timestamp} - The timestamp for the end of the test execution.
 * detailed_logs {string} - The detailed logs for the test execution.
-* screenshots_and_video {string} - The URL for the screenshots and the video recording of the test execution.
+* screenshots_and_video {string} - The URLs for the screenshots and the video recording of the test execution.
+* hash {string} - The unique hash for the test execution.
+* results {string} - The link to the Results page for the test execution.
