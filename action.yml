@@ -48,5 +48,5 @@ runs:
       shell: bash 
     - run: echo "${{ inputs.api_request }}"
       shell: bash 
-    - run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }} 
+    - run: echo ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }} 
       shell: bash
