@@ -30,8 +30,8 @@ do
      passed=$( echo "$result" | jq '.passed' )
      failed=$( echo "$result" | jq '.failed' )
      errors=$( echo "$result" | jq '.errors' )
-     detailedlogs=$( echo "$result" | jq '.detailed_logs' )
-     screenshotsandvideo=$( echo "$result" | jq '.screenshots_and_video' )
+     #detailedlogs=$( echo "$result" | jq '.detailed_logs' )
+     #screenshotsandvideo=$( echo "$result" | jq '.screenshots_and_video' )
      starttime=$( echo "$result" | jq '.start_time' )
      endtime=$( echo "$result" | jq '.end_time' )
      
@@ -47,8 +47,8 @@ do
      echo "::set-output name=errors::$errors"
      echo "::set-output name=start_time::$starttime"
      echo "::set-output name=end_time::$endtime"
-     echo "::set-output name=detailed_logs::$detailedlogs"
-     echo "::set-output name=screenshots_and_video::$screenshotsandvideo"
+     #echo "::set-output name=detailed_logs::$detailedlogs"
+     #echo "::set-output name=screenshots_and_video::$screenshotsandvideo"
 
      exit 0
   fi
