@@ -23,22 +23,31 @@ outputs:
     value: ${{ steps.endtest_functional_tests.outputs.test_suite_name }}
   configuration:
     description: "The configuration of the machine or mobile device on which the test was executed"
+    value: ${{ steps.endtest_functional_tests.outputs.configuration }}
   test_cases:
     description: "The number of test cases"
+    value: ${{ steps.endtest_functional_tests.outputs.test_cases }}
   passed:
     description: "The number of assertions that have passed"
+    value: ${{ steps.endtest_functional_tests.outputs.passed }}
   failed:
     description: "The number of assertions that have failed"
+    value: ${{ steps.endtest_functional_tests.outputs.failed }}
   errors:
     description: "The number of errors that have been encountered"
+    value: ${{ steps.endtest_functional_tests.outputs.errors }}
   start_time:
     description: "The timestamp for the start of the test execution."
+    value: ${{ steps.endtest_functional_tests.outputs.start_time }}
   end_time:
     description: "The timestamp for the end of the test execution."
-  #detailed_logs:
-    #description: "The detailed logs for the test execution"
-  #screenshots_and_video:
-    #description: "The URLs for the screenshts and video recordings of the test execution"
+    value: ${{ steps.endtest_functional_tests.outputs.end_time }}
+  detailed_logs:
+    description: "The detailed logs for the test execution"
+    value: ${{ steps.endtest_functional_tests.outputs.detailed_logs }}
+  screenshots_and_video:
+    description: "The URLs for the screenshts and video recordings of the test execution"
+    value: ${{ steps.endtest_functional_tests.outputs.screenshots_and_video }}
 
 runs:
   using: "composite"
