@@ -45,7 +45,11 @@ do
      echo $starttime
      echo $endtime
      
-     echo "::set-output name=test_suite_name::$testsuitename"
+     echo "one more"
+     
+     echo two more
+     
+     echo ::set-output name=test_suite_name::$testsuitename
      echo "::set-output name=configuration::$configuration"
      echo "::set-output name=test_cases::$testcases"
      echo "::set-output name=passed::$passed"
