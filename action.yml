@@ -48,6 +48,12 @@ outputs:
   screenshots_and_video:
     description: "The URLs for the screenshts and video recordings of the test execution"
     value: ${{ steps.endtest_functional_tests.outputs.screenshots_and_video }}
+  hash:
+   description: "The unique hash for the test execution"
+   value: ${{ steps.endtest_functional_tests.outputs.hash }}
+  results:
+   description: "The link to the Results page for the test execution"
+   value: ${{ steps.endtest_functional_tests.outputs.results }}
 
 runs:
   using: "composite"
