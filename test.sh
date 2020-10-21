@@ -1,3 +1,4 @@
+#!/bin/bash
 hash=$(curl -X GET --header "Accept: */*" "${3}")
 for run in {1.."${4}"}
 do
@@ -34,12 +35,12 @@ do
      starttime=$( echo "$result" | jq '.start_time' )
      endtime=$( echo "$result" | jq '.end_time' )
      
-     echo $configuration
+     echo $testsuitename
      
      echo "nothing"
 
-     echo "::set-output name=SELECTED_COLOR::green"
-     echo ::set-output name=test_suite_name::$testsuitename
+     echo "::set-output name=test_suite_name::$testsuitename"
+
 
      exit 0
   fi
