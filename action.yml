@@ -46,9 +46,5 @@ runs:
       shell: bash 
     - run: sudo chmod +x ${{ github.action_path }}/test.sh
       shell: bash 
-    - run: echo "checking the output"
-      shell: bash 
-    - run: echo ::set-output name=test_suite_name::sample
-      shell: bash 
     - run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }} 
       shell: bash
