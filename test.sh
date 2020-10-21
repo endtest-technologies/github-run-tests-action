@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 hash=$(curl -X GET --header "Accept: */*" "${3}")
 for run in {1.."${4}"}
 do
@@ -34,6 +35,16 @@ do
      #screenshotsandvideo=$( echo "$result" | jq '.screenshots_and_video' )
      starttime=$( echo "$result" | jq '.start_time' )
      endtime=$( echo "$result" | jq '.end_time' )   
+     
+     echo $testsuitename
+     echo $configuration
+     echo $testcases
+     echo $passed
+     echo $failed
+     echo $errors
+     echo $starttime
+     echo $endtime
+     
      echo "::set-output name=test_suite_name::$testsuitename"
      echo "::set-output name=configuration::$configuration"
      echo "::set-output name=test_cases::$testcases"
@@ -44,14 +55,6 @@ do
      echo "::set-output name=end_time::$endtime"
      #echo "::set-output name=detailed_logs::$detailedlogs"
      #echo "::set-output name=screenshots_and_video::$screenshotsandvideo"
-     echo $testsuitename
-     echo $configuration
-     echo $testcases
-     echo $passed
-     echo $failed
-     echo $errors
-     echo $starttime
-     echo $endtime
      exit 0
   fi
 done
