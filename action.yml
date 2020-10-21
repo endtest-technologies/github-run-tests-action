@@ -34,10 +34,10 @@ outputs:
     description: "The timestamp for the start of the test execution."
   end_time:
     description: "The timestamp for the end of the test execution."
-  detailed_logs:
-    description: "The detailed logs for the test execution"
-  screenshots_and_video:
-    description: "The URLs for the screenshts and video recordings of the test execution"
+  #detailed_logs:
+    #description: "The detailed logs for the test execution"
+  #screenshots_and_video:
+    #description: "The URLs for the screenshts and video recordings of the test execution"
 
 runs:
   using: "composite"
