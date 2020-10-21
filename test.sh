@@ -40,7 +40,15 @@ do
      echo "nothing"
 
      echo "::set-output name=test_suite_name::$testsuitename"
-
+     echo "::set-output name=configuration::$configuration"
+     echo "::set-output name=test_cases::$testcases"
+     echo "::set-output name=passed::$passed"
+     echo "::set-output name=failed::$failed"
+     echo "::set-output name=errors::$errors"
+     echo "::set-output name=start_time::$starttime"
+     echo "::set-output name=end_time::$endtime"
+     echo "::set-output name=detailed_logs::$detailedlogs"
+     echo "::set-output name=screenshots_and_video::$screenshotsandvideo"
 
      exit 0
   fi
