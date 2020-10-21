@@ -21,7 +21,7 @@ jobs:
 
       - name: Functional test deployment
         id: endtest_functional_tests
-        uses: endtest-technologies/github-run-tests-action@v1.4
+        uses: endtest-technologies/github-run-tests-action@v1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -29,6 +29,7 @@ jobs:
           app_code: <your-endtest-app-code>
           api_request: <your-endtest-api-request-for-starting-a-test-execution>
           number_of_loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
+          
       - name: Use the outputs from test execution in a different step
         run: |
           echo ${{ steps.endtest_functional_tests.outputs.test_suite_name }}
