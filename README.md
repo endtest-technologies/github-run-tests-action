@@ -2,7 +2,7 @@
 
 # Endtest GitHub Run Tests Deployment Action
 
-This GitHub Action creates an Endtest deployment event, triggering any functional
+This GitHub Action creates an [Endtest](https://endtest.io) deployment event, triggering any functional
 tests associated with that deployment and waiting for their results.
 
 ### Example workflow:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Functional test deployment
         id: endtest_functional_tests
-        uses: endtest-technologies/github-run-tests-action@v1.5
+        uses: endtest-technologies/github-run-tests-action@v1.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -65,15 +65,15 @@ jobs:
 
 ### Outputs:
 
-* test_suite_name {string} - The name of the test suite.
-* configuration {string} - The configuration of the machine or mobile device on which the test was executed.
-* test_cases {int32} - The number of test cases.
-* passed {int32} - The number of assertions that have passed.
-* failed {int32} - The number of assertions that have failed.
-* errors {int32} - The number of errors that have been encountered.
-* start_time {timestamp} - The timestamp for the start of the test execution.
-* end_time {timestamp} - The timestamp for the end of the test execution.
-* detailed_logs {string} - The detailed logs for the test execution.
-* screenshots_and_video {string} - The URLs for the screenshots and the video recording of the test execution.
-* hash {string} - The unique hash for the test execution.
-* results {string} - The link to the Results page for the test execution.
+* `test_suite_name` {string} - The name of the test suite.
+* `configuration` {string} - The configuration of the machine or mobile device on which the test was executed.
+* `test_cases` {int32} - The number of test cases.
+* `passed` {int32} - The number of assertions that have passed.
+* `failed` {int32} - The number of assertions that have failed.
+* `errors` {int32} - The number of errors that have been encountered.
+* `start_time` {timestamp} - The timestamp for the start of the test execution.
+* `end_time` {timestamp} - The timestamp for the end of the test execution.
+* `detailed_logs` {string} - The detailed logs for the test execution.
+* `screenshots_and_video` {string} - The URLs for the screenshots and the video recording of the test execution.
+* `hash` {string} - The unique hash for the test execution.
+* `results` {string} - The link to the Results page for the test execution.
