@@ -8,8 +8,6 @@ do
   sleep 30
   result=$(curl -X GET --header "Accept: */*" "https://endtest.io/api.php?action=getResults&appId=${1}&appCode=${2}&hash=${hash}&format=json")
 
-  echo $result
-
   if [ "$result" == "Test is still running." ]
   then
     status=$result
