@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 hash=$(curl -X GET --header "Accept: */*" "${3}")
-for run in {1.."${4}"}
+loop=1
+
+while [ $loop -le $4 ]
 do
   sleep 30
   result=$(curl -X GET --header "Accept: */*" "https://endtest.io/api.php?action=getResults&appId=${1}&appCode=${2}&hash=${hash}&format=json")
+
   if [ "$result" == "Test is still running." ]
   then
     status=$result
