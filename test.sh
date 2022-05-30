@@ -6,7 +6,7 @@ loop=1
 while [ $loop -le $4 ]
 do
   sleep 30
-  result=$(curl -X GET --header "Accept: */*" "https://endtest.io/api.php?action=getResults&appId=${1}&appCode=${2}&hash=${hash}&format=json")
+  result=$(curl -X GET --header "Accept: */*" "https://app.endtest.io/api.php?action=getResults&appId=${1}&appCode=${2}&hash=${hash}&format=json")
 
   if [ "$result" == "Test is still running." ]
   then
@@ -37,10 +37,10 @@ do
      detailedlogs=$( echo $result | jq '.detailed_logs' )
      screenshotsandvideo=$( echo $result | jq '.screenshots_and_video' )
      starttime=$( echo $result | jq '.start_time' )
-     endtime=$( echo $result | jq '.end_time' ) 
-     
-     results=https://endtest.io/results?hash="$hash"
-     
+     endtime=$( echo $result | jq '.end_time' )
+
+     results=https://app.endtest.io/results?hash="$hash"
+
      echo Test Suite Name: $testsuitename
      echo Configuration: $configuration
      echo Test Cases: $testcases
@@ -51,7 +51,7 @@ do
      echo End Time: $endtime
      echo Hash: $hash
      echo Results: $results
-     
+
      echo ::set-output name=test_suite_name::$( echo $testsuitename )
      echo ::set-output name=configuration::$( echo $configuration )
      echo ::set-output name=test_cases::$( echo $testcases )

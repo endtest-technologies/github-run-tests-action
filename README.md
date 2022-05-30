@@ -1,4 +1,4 @@
-![endtest logo](https://endtest.io/images/endtest_logo_small.svg)
+![endtest logo](https://app.endtest.io/images/endtest_logo_small.svg)
 
 # Endtest GitHub Run Tests Deployment Action
 
@@ -29,7 +29,7 @@ jobs:
           app_code: <your-endtest-app-code>
           api_request: <your-endtest-api-request-for-starting-a-test-execution>
           number_of_loops: <the-number-of-times-the-API-request-for-fetching-the-results-will-be-sent-once-every-30-seconds>
-          
+
       - name: Use the outputs from test execution in a different step
         run: |
           echo ${{ steps.endtest_functional_tests.outputs.test_suite_name }}
@@ -44,7 +44,7 @@ jobs:
           echo ${{ steps.endtest_functional_tests.outputs.screenshots_and_video }}
           echo ${{ steps.endtest_functional_tests.outputs.hash }}
           echo ${{ steps.endtest_functional_tests.outputs.results }}
-     
+
 ```
 
 ### Environment variables
@@ -57,8 +57,8 @@ jobs:
 
 ### Inputs
 
-- `app_id` {string} - The App ID for your Endtest account ([available here](https://endtest.io/settings)).
-- `app_code` {string} - The App Code for your Endtest account ([available here](https://endtest.io/settings)).
+- `app_id` {string} - The App ID for your Endtest account ([available here](https://app.endtest.io/settings)).
+- `app_code` {string} - The App Code for your Endtest account ([available here](https://app.endtest.io/settings)).
 - `api_request` {string} - The Endtest API request.
 - `number_of_loops` {int32} - The number of times the API request for fetching the results will be sent once every 30 seconds.
 

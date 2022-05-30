@@ -5,10 +5,10 @@ branding:
   color: white
 inputs:
   app_id:
-    description: 'The Endtest App ID for your account. You can get it from the https://endtest.io/settings page.'
+    description: 'The Endtest App ID for your account. You can get it from the https://app.endtest.io/settings page.'
     required: true
   app_code:
-    description: 'The Endtest App Code for your account. You can get it from the https://endtest.io/settings page.'
+    description: 'The Endtest App Code for your account. You can get it from the https://app.endtest.io/settings page.'
     required: true
   api_request:
     description: 'The Endtest API request for starting the test execution.'
@@ -59,9 +59,9 @@ runs:
   using: "composite"
   steps:
     - run: sudo apt-get install jq
-      shell: bash 
+      shell: bash
     - run: sudo chmod +x ${{ github.action_path }}/test.sh
-      shell: bash 
+      shell: bash
     - id: endtest_functional_tests
-      run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }} 
+      run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }}
       shell: bash
