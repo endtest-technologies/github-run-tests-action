@@ -1,67 +1,100 @@
 name: "Run Endtest functional tests"
-description: "Register a deployment event with Endtest and run the functional tests"
+description: "Trigger one or more Endtest test executions and wait for their results"
 branding:
   icon: play-circle
   color: white
+
 inputs:
   app_id:
-    description: 'The Endtest App ID for your account. You can get it from the https://app.endtest.io/settings page.'
+    description: "The Endtest App ID for your account. You can get it from https://app.endtest.io/settings."
     required: true
   app_code:
-    description: 'The Endtest App Code for your account. You can get it from the https://app.endtest.io/settings page.'
+    description: "The Endtest App Code for your account. You can get it from https://app.endtest.io/settings."
     required: true
   api_request:
-    description: 'The Endtest API request for starting the test execution.'
+    description: "The Endtest API request that starts one or more test executions. The response may contain one hash or multiple comma-separated hashes."
     required: true
   number_of_loops:
-    description: 'The number of times the API request for fetching the results will be sent once every 30 seconds.'
+    description: "The maximum number of result checks. Checks run once every 30 seconds."
     required: true
+  results_format:
+    description: "The Endtest results format: json or json-light."
+    required: false
+    default: "json"
 
 outputs:
   test_suite_name:
-    description: "The name of the test suite"
+    description: "One test suite name, or a JSON array of names when multiple executions were triggered"
     value: ${{ steps.endtest_functional_tests.outputs.test_suite_name }}
   configuration:
-    description: "The configuration of the machine or mobile device on which the test was executed"
+    description: "One execution configuration, or a JSON array of configurations when multiple executions were triggered"
     value: ${{ steps.endtest_functional_tests.outputs.configuration }}
   test_cases:
-    description: "The number of test cases"
+    description: "Total number of test cases across all executions"
     value: ${{ steps.endtest_functional_tests.outputs.test_cases }}
   passed:
-    description: "The number of assertions that have passed"
+    description: "Total number of passed assertions across all executions"
     value: ${{ steps.endtest_functional_tests.outputs.passed }}
   failed:
-    description: "The number of assertions that have failed"
+    description: "Total number of failed assertions across all executions"
     value: ${{ steps.endtest_functional_tests.outputs.failed }}
   errors:
-    description: "The number of errors that have been encountered"
+    description: "Total number of errors across all executions"
     value: ${{ steps.endtest_functional_tests.outputs.errors }}
   start_time:
-    description: "The timestamp for the start of the test execution."
+    description: "The earliest execution start timestamp"
     value: ${{ steps.endtest_functional_tests.outputs.start_time }}
   end_time:
-    description: "The timestamp for the end of the test execution."
+    description: "The latest execution end timestamp"
     value: ${{ steps.endtest_functional_tests.outputs.end_time }}
   detailed_logs:
-    description: "The detailed logs for the test execution"
+    description: "A flattened JSON array containing detailed logs from all executions. Empty when results_format is json-light."
     value: ${{ steps.endtest_functional_tests.outputs.detailed_logs }}
   screenshots_and_video:
-    description: "The URLs for the screenshts and video recordings of the test execution"
+    description: "A flattened JSON array containing screenshot, log, and video URLs from all executions. Empty when results_format is json-light."
     value: ${{ steps.endtest_functional_tests.outputs.screenshots_and_video }}
   hash:
-   description: "The unique hash for the test execution"
-   value: ${{ steps.endtest_functional_tests.outputs.hash }}
+    description: "The hash returned by Endtest, including comma-separated hashes for multiple executions"
+    value: ${{ steps.endtest_functional_tests.outputs.hash }}
   results:
-   description: "The link to the Results page for the test execution"
-   value: ${{ steps.endtest_functional_tests.outputs.results }}
+    description: "One Endtest Results page URL, or a JSON array of URLs when multiple executions were triggered"
+    value: ${{ steps.endtest_functional_tests.outputs.results }}
+  execution_count:
+    description: "The number of completed test executions"
+    value: ${{ steps.endtest_functional_tests.outputs.execution_count }}
+  hashes:
+    description: "A JSON array containing every execution hash"
+    value: ${{ steps.endtest_functional_tests.outputs.hashes }}
+  result_urls:
+    description: "A JSON array containing an Endtest Results page URL for every execution"
+    value: ${{ steps.endtest_functional_tests.outputs.result_urls }}
+  test_executions:
+    description: "The complete Endtest API response normalized to a JSON array"
+    value: ${{ steps.endtest_functional_tests.outputs.test_executions }}
 
 runs:
   using: "composite"
   steps:
-    - run: sudo apt-get install jq
+    - name: Ensure jq is available
+      run: |
+        if ! command -v jq >/dev/null 2>&1; then
+          sudo apt-get update
+          sudo apt-get install -y jq
+        fi
       shell: bash
-    - run: sudo chmod +x ${{ github.action_path }}/test.sh
-      shell: bash
+
     - id: endtest_functional_tests
-      run: ${{ github.action_path }}/test.sh ${{ inputs.app_id }} ${{ inputs.app_code }} "${{ inputs.api_request }}" ${{ inputs.number_of_loops }}
+      env:
+        ENDTEST_APP_ID: ${{ inputs.app_id }}
+        ENDTEST_APP_CODE: ${{ inputs.app_code }}
+        ENDTEST_API_REQUEST: ${{ inputs.api_request }}
+        ENDTEST_NUMBER_OF_LOOPS: ${{ inputs.number_of_loops }}
+        ENDTEST_RESULTS_FORMAT: ${{ inputs.results_format }}
+      run: |
+        bash "${{ github.action_path }}/test.sh" \
+          "$ENDTEST_APP_ID" \
+          "$ENDTEST_APP_CODE" \
+          "$ENDTEST_API_REQUEST" \
+          "$ENDTEST_NUMBER_OF_LOOPS" \
+          "$ENDTEST_RESULTS_FORMAT"
       shell: bash
