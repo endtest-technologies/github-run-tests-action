@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests with the Critical label
         id: endtest
-        uses: endtest-technologies/github-run-tests-action@v1.9
+        uses: endtest-technologies/github-run-tests-action@v1.10
         with:
           app_id: ${{ secrets.ENDTEST_APP_ID }}
           app_code: ${{ secrets.ENDTEST_APP_CODE }}
@@ -34,14 +34,17 @@ jobs:
             https://app.endtest.io/api.php?action=runWeb&appId=${{ secrets.ENDTEST_APP_ID }}&appCode=${{ secrets.ENDTEST_APP_CODE }}&label=Critical&platform=windows&os=windows11&browser=chrome&browserVersion=latest&resolution=1280x1024&geolocation=sanfrancisco&cases=all&notes=
           number_of_loops: 60
           results_format: json-light
+          fail_build: true
 
       - name: Show the execution summary
+        if: always()
         env:
           EXECUTION_COUNT: ${{ steps.endtest.outputs.execution_count }}
           TEST_CASES: ${{ steps.endtest.outputs.test_cases }}
           PASSED: ${{ steps.endtest.outputs.passed }}
           FAILED: ${{ steps.endtest.outputs.failed }}
           ERRORS: ${{ steps.endtest.outputs.errors }}
+          FAILED_TEST_CASES: ${{ steps.endtest.outputs.failed_test_cases }}
           TEST_EXECUTIONS: ${{ steps.endtest.outputs.test_executions }}
         run: |
           echo "Executions: $EXECUTION_COUNT"
@@ -49,6 +52,7 @@ jobs:
           echo "Passed assertions: $PASSED"
           echo "Failed assertions: $FAILED"
           echo "Errors: $ERRORS"
+          echo "Failed test cases: $FAILED_TEST_CASES"
           echo "$TEST_EXECUTIONS" | jq
 ```
 
@@ -59,6 +63,15 @@ jobs:
 * `api_request` {string}, required: The complete Endtest API request that starts the test execution or executions.
 * `number_of_loops` {integer}, required: The maximum number of result checks. The action waits 30 seconds before each check.
 * `results_format` {string}, optional: `json` for detailed logs and media URLs, or `json-light` for a smaller summary response. The default is `json`.
+* `fail_build` {boolean}, optional: Set to `true` to fail the GitHub Actions step when any execution reports failed assertions or errors. The default is `false` for backward compatibility.
+
+## Failing the workflow on test failures
+
+For CI workflows, setting `fail_build: true` is recommended. The action writes all outputs before failing the step, so later steps using `if: always()` can still publish or inspect the Endtest results.
+
+The step fails when the aggregated `failed` value is greater than zero, the aggregated `errors` value is greater than zero, a test case status is `Failed`, `Error`, or `Erred`, or the Endtest API itself returns `Erred.`.
+
+Leave `fail_build` set to `false` for informational or non-blocking test executions.
 
 ## Multiple execution behavior
 
@@ -82,6 +95,7 @@ Use `test_executions` when you need the complete per-execution data without aggr
 * `passed` {integer}: Total passed assertions across all executions.
 * `failed` {integer}: Total failed assertions across all executions.
 * `errors` {integer}: Total errors across all executions.
+* `failed_test_cases` {integer}: Total test cases with a `Failed`, `Error`, or `Erred` status.
 * `start_time` {timestamp}: Earliest execution start time.
 * `end_time` {timestamp}: Latest execution end time.
 * `detailed_logs` {JSON string}: Flattened detailed logs. This is an empty array with `json-light`.
@@ -101,3 +115,4 @@ The action fails with a clear message when:
 * Endtest returns `Erred.`.
 * The results response is not valid JSON.
 * Not all execution results are available before `number_of_loops` is exhausted.
+* `fail_build` is `true` and Endtest reports failed assertions, errors, or failed test case statuses.

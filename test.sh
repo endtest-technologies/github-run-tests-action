@@ -6,6 +6,7 @@ APP_CODE="${2:-}"
 API_REQUEST="${3:-}"
 NUMBER_OF_LOOPS="${4:-}"
 RESULTS_FORMAT="${5:-json}"
+FAIL_BUILD="${6:-false}"
 POLL_INTERVAL_SECONDS="${ENDTEST_POLL_INTERVAL_SECONDS:-30}"
 
 if [[ -z "$APP_ID" || -z "$APP_CODE" || -z "$API_REQUEST" || -z "$NUMBER_OF_LOOPS" ]]; then
@@ -20,6 +21,11 @@ fi
 
 if [[ "$RESULTS_FORMAT" != "json" && "$RESULTS_FORMAT" != "json-light" ]]; then
   echo "results_format must be either json or json-light." >&2
+  exit 1
+fi
+
+if [[ "$FAIL_BUILD" != "true" && "$FAIL_BUILD" != "false" ]]; then
+  echo "fail_build must be either true or false." >&2
   exit 1
 fi
 
@@ -122,6 +128,11 @@ for ((loop = 1; loop <= NUMBER_OF_LOOPS; loop++)); do
   passed=$(printf '%s' "$normalized_results" | jq '[.[] | (.passed // 0 | tonumber? // 0)] | add // 0')
   failed=$(printf '%s' "$normalized_results" | jq '[.[] | (.failed // 0 | tonumber? // 0)] | add // 0')
   errors=$(printf '%s' "$normalized_results" | jq '[.[] | (.errors // 0 | tonumber? // 0)] | add // 0')
+  failed_test_cases=$(printf '%s' "$normalized_results" | jq '[
+    .[] | (.test_case_management // [])[]?
+    | ((.status // "") | ascii_downcase) as $status
+    | select($status == "failed" or $status == "error" or $status == "erred")
+  ] | length')
   detailed_logs=$(printf '%s' "$normalized_results" | jq -c '[.[] | (.detailed_logs // [])[]?]')
   screenshots_and_video=$(printf '%s' "$normalized_results" | jq -c '[.[] | (.screenshots_and_video // [])[]?]')
   start_time=$(printf '%s' "$normalized_results" | jq -r '[.[] | .start_time // empty] | min // ""')
@@ -141,6 +152,7 @@ for ((loop = 1; loop <= NUMBER_OF_LOOPS; loop++)); do
   echo "Passed: $passed"
   echo "Failed: $failed"
   echo "Errors: $errors"
+  echo "Failed Test Cases: $failed_test_cases"
   echo "Start Time: $start_time"
   echo "End Time: $end_time"
   echo "Hash(es): $hash"
@@ -152,6 +164,7 @@ for ((loop = 1; loop <= NUMBER_OF_LOOPS; loop++)); do
   write_output "passed" "$passed"
   write_output "failed" "$failed"
   write_output "errors" "$errors"
+  write_output "failed_test_cases" "$failed_test_cases"
   write_output "start_time" "$start_time"
   write_output "end_time" "$end_time"
   write_output "detailed_logs" "$detailed_logs"
@@ -162,6 +175,12 @@ for ((loop = 1; loop <= NUMBER_OF_LOOPS; loop++)); do
   write_output "hashes" "$hashes_json"
   write_output "result_urls" "$result_urls"
   write_output "test_executions" "$normalized_results"
+
+  if [[ "$FAIL_BUILD" == "true" ]] && (( failed > 0 || errors > 0 || failed_test_cases > 0 )); then
+    echo "Endtest reported $failed failed assertion(s), $errors error(s), and $failed_test_cases failed test case(s). Failing the GitHub Actions step." >&2
+    exit 1
+  fi
+
   exit 0
 done
 

@@ -21,6 +21,10 @@ inputs:
     description: "The Endtest results format: json or json-light."
     required: false
     default: "json"
+  fail_build:
+    description: "Whether to fail the GitHub Actions step when Endtest reports failed assertions or errors."
+    required: false
+    default: "false"
 
 outputs:
   test_suite_name:
@@ -41,6 +45,9 @@ outputs:
   errors:
     description: "Total number of errors across all executions"
     value: ${{ steps.endtest_functional_tests.outputs.errors }}
+  failed_test_cases:
+    description: "Total number of failed test cases reported across all executions"
+    value: ${{ steps.endtest_functional_tests.outputs.failed_test_cases }}
   start_time:
     description: "The earliest execution start timestamp"
     value: ${{ steps.endtest_functional_tests.outputs.start_time }}
@@ -90,11 +97,13 @@ runs:
         ENDTEST_API_REQUEST: ${{ inputs.api_request }}
         ENDTEST_NUMBER_OF_LOOPS: ${{ inputs.number_of_loops }}
         ENDTEST_RESULTS_FORMAT: ${{ inputs.results_format }}
+        ENDTEST_FAIL_BUILD: ${{ inputs.fail_build }}
       run: |
         bash "${{ github.action_path }}/test.sh" \
           "$ENDTEST_APP_ID" \
           "$ENDTEST_APP_CODE" \
           "$ENDTEST_API_REQUEST" \
           "$ENDTEST_NUMBER_OF_LOOPS" \
-          "$ENDTEST_RESULTS_FORMAT"
+          "$ENDTEST_RESULTS_FORMAT" \
+          "$ENDTEST_FAIL_BUILD"
       shell: bash
